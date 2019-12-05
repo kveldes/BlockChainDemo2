@@ -47,6 +47,8 @@ public class Main {
             userChoice = input.nextInt();
 
 
+
+
             switch (userChoice) {
                 case 1:
                     System.out.println("\nYou've chosen item #1 - View all Products");
@@ -142,16 +144,16 @@ public class Main {
 
                     for (int i=1;i<=loop;i++) {
                         System.out.println("Please Enter the A/A of the Product"+ i);
-                        String aa1 = myObj1.next();  // Read user input
+                        int aa1 = myObj1.nextInt();  // Read user input
 
                         System.out.println("Please Enter the code of the Product"+i);
-                        String code1 = myObj1.next();  // Read user input
+                        int code1 = myObj1.nextInt();  // Read user input
 
                         System.out.println("Please Enter the tile of the Product"+i);
                         String title1 = myObj1.next();  // Read user input
 
                         System.out.println("Please Enter the cost of the Product"+i);
-                        String cost1 = myObj1.next();  // Read user input
+                        int cost1 = myObj1.nextInt();  // Read user input
 
                         System.out.println("Please Enter the description of the Product"+i);
                         String desc1 = myObj1.next();  // Read user input
@@ -159,10 +161,13 @@ public class Main {
                         System.out.println("Please Enter the category of the Product"+i);
                         String categ1 = myObj1.next();  // Read user input
 
-                        System.out.println("The previous A/A of the previous  Product is " + blockchain.size());
+                        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                        LocalDateTime now1 = LocalDateTime.now();
+                        String dtime1=dtf1.format(now1);
+
+                        String data1= aa1+"#"+code1+"#"+title1+"#"+dtime1+cost1+"#"+desc1+"#"+categ1;
 
 
-                        String data1 = aa1 + "#" + code1 + "#" + title1 + "#" + cost1 + "#" + desc1 + "#" + categ1;
 
 
                         long startTime1 = System.nanoTime();
@@ -176,6 +181,25 @@ public class Main {
                         System.out.println("\nThe block chain: ");
                         System.out.println(blockchainJson2);
 
+                        //Μετατρέπω απο balockchainJson απο συλλογη από Objects Block σε πινακα από objects Block
+                        Gson gson1 = new Gson();
+                        Block[] founderArray1 = gson1.fromJson(blockchainJson2, Block[].class);
+
+                        for(int k = 0; k< founderArray1.length; k++){
+                            System.out.println("---------------------------------------------------------");
+                            System.out.println("hash: "+founderArray1[k].getHash());
+                            System.out.println("previousHash: "+founderArray1[k].getPreviousHash());
+                            System.out.println("data: "+data1);
+                            System.out.println("timeStamp: "+founderArray1[k].timeStamp());
+                            System.out.println("nonce: "+founderArray1[k].nonce());
+                            System.out.println("---------------------------------------------------------");
+                        }
+
+                        String hash1=founderArray1[counter].getHash();
+                        String prvhash1=founderArray1[counter].getPreviousHash();
+                        long timeStamp1=founderArray1[counter].timeStamp();
+                        int nonce1=founderArray1[counter].nonce();
+
 
                         // Check for validity
                         System.out.println("\nBlockchain is Valid: " + isChainValid());
@@ -183,7 +207,11 @@ public class Main {
                         long endTime1 = System.nanoTime();
                         long duration1 = endTime1 - startTime1;
                         System.out.println("Total time ellapsed: " + (float) duration1 / 1000000000 + " seconds");
-                    }
+
+                        db.insert(aa1,code1,title1,dtime1,cost1,desc1,categ1,hash1,prvhash1,data1,timeStamp1,nonce1);
+                        counter++;
+
+           }
                     break;
 
                 case 4:
