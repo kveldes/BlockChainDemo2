@@ -52,6 +52,7 @@ public class Main {
             switch (userChoice) {
                 case 1:
                     System.out.println("\nYou've chosen item #1 - View all Products");
+                    db.viewProtucts();
                     break;
 
                 case 2:
@@ -221,7 +222,11 @@ public class Main {
 
                 case 5:
                     System.out.println("\nYou've chosen item #5 - Viw statistics of a Product");
-                    // do something...
+                    System.out.println("\nPlease Enter the tile of the Product");
+                    Scanner myObj2 = new Scanner(System.in);  // Create a Scanner object
+                    String title1 = myObj2.next();  // Read user input
+                    db.viewStat(title1);
+
                     break;
                 case 6:
                     quit = true;

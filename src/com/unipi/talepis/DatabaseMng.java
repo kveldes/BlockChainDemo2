@@ -41,17 +41,36 @@ public class DatabaseMng {
 
 
 
-    public void selectAll() {
-        String sql = "SELECT id, name, capacity FROM blockchain";
+    public void viewProtucts() {
+        String sql = "SELECT DISTINCT title FROM blockchain";
         String url = "jdbc:sqlite:backchain.db";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("id") + "\t" +
-                        rs.getString("name") + "\t" +
-                        rs.getDouble("capacity"));
+                System.out.println(rs.getString("title"));
+                //System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void viewStat(String title) {
+        String sql = "SELECT dtime WHERE title==product FROM blockchain";
+
+        String url = "jdbc:sqlite:backchain.db";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getString("dtime"));
+                //System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
