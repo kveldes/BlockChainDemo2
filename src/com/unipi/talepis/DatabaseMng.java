@@ -68,12 +68,22 @@ public class DatabaseMng {
             // loop through the result set
             while (rs.next()) {
                 System.out.println("Timestamp :"+rs.getString("dtime")+ "\t Cost :" + rs.getString("cost"));
-                //System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
+
 
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 }
+
+    public void productStat(int result) {
+        //Result is 1=Product Code and 2=Product Title
+        if (result==1){
+
+
+        }else{
+
+        }
+    }
 
 }
