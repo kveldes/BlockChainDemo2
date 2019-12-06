@@ -60,21 +60,20 @@ public class DatabaseMng {
     }
 
     public void viewStat(String title) {
-        String sql = "SELECT dtime WHERE title==product FROM blockchain";
-
+        String sql = "SELECT dtime, cost FROM blockchain WHERE title = '"+title+"'";
         String url = "jdbc:sqlite:backchain.db";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getString("dtime"));
+                System.out.println("Timestamp :"+rs.getString("dtime")+ "\t Cost :" + rs.getString("cost"));
                 //System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
 
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+}
 
-    }
 }
