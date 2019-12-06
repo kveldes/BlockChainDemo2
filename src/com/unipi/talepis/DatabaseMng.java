@@ -16,7 +16,7 @@ public class DatabaseMng {
         return conn;
     }
 
-    public void insert(int aa_id, int code,String title,String dtime,int cost,String desc,String categ,String hash,String prvhash,String data,long timestamp,int nonce) {
+    public void insert(int aa_id, int code, String title, String dtime, int cost, String desc, String categ, String hash, String prvhash, String data, long timestamp, int nonce) {
         String sql = "INSERT INTO blockchain(aa_id,code,title,dtime,cost,desc,categ,hash,prvhash,data,timestamp,nonce) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection conn = this.connect();
@@ -40,8 +40,8 @@ public class DatabaseMng {
     }
 
 
-
-    public void viewProtucts() {
+    public int viewProductsByTitle() {
+        int counter = 0;
         String sql = "SELECT DISTINCT title FROM blockchain";
         String url = "jdbc:sqlite:backchain.db";
         try (Connection conn = DriverManager.getConnection(url);
@@ -51,39 +51,35 @@ public class DatabaseMng {
             while (rs.next()) {
                 System.out.println(rs.getString("title"));
                 //System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getDouble("capacity"));
-
+                counter++;
             }
+            System.out.println("Found " + counter + " unique products");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+        return counter;
     }
 
+
     public void viewStat(String title) {
-        String sql = "SELECT dtime, cost FROM blockchain WHERE title = '"+title+"'";
+        String sql = "SELECT dtime, cost FROM blockchain WHERE title = '" + title + "'";
         String url = "jdbc:sqlite:backchain.db";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             // loop through the result set
             while (rs.next()) {
-                System.out.println("Timestamp :"+rs.getString("dtime")+ "\t Cost :" + rs.getString("cost"));
+                System.out.println("Timestamp :" + rs.getString("dtime") + "\t Cost :" + rs.getString("cost"));
 
 
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-}
+    }
 
     public void productStat(int result) {
         //Result is 1=Product Code and 2=Product Title
-        if (result==1){
 
-
-        }else{
-
-        }
     }
-
 }

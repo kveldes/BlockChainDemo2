@@ -52,7 +52,7 @@ public class Main {
             switch (userChoice) {
                 case 1:
                     System.out.println("\nYou've chosen item #1 - View all Products");
-                    db.viewProtucts();
+                    db.viewProductsByTitle();
                     break;
 
                 case 2:
@@ -218,13 +218,13 @@ public class Main {
                 case 4:
                     System.out.println("\nYou've chosen item #4 - Search for a product");
                     Scanner myObj3 = new Scanner(System.in);  // Create a Scanner object
-                    System.out.println("\nPlease Enter from the these choices: 1=Product Code 2=Product Title ");
+                    System.out.println("\nPlease Enter from these choices: 1=Product Code 2=Product Title ");
                     int result = myObj3.nextInt();  // Read user input
                     if ((result<=0) || (result>2)){
                         System.out.println("Illegal value");
                         break;
                     }
-                    db.productStat(result);
+
 
                     break;
 
